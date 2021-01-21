@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include layout="@layout/biaoti1"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ViewFlipper
+                android:layout_marginTop="5dp"
+                android:autoStart="true"
+                android:id="@+id/view_flipper"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:flipInterval="4000"
+                android:inAnimation="@anim/right_in"
+                android:outAnimation="@anim/right_out" />
+
+
+            <GridView
+                android:horizontalSpacing="10dp"
+                android:id="@+id/grid_fuwu"
+                android:layout_width="match_parent"
+                android:layout_height="135dp"
+                android:gravity="center"
+                android:numColumns="5"
+                android:padding="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="热门主题"
+                android:textColor="#F02D63"
+                android:textSize="20sp" />
+
+            <GridView
+                android:id="@+id/gird_zhuti"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:numColumns="2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="新闻专栏"
+                android:textColor="#F02D63"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/news_layout"
+                android:layout_width="match_parent"
+                android:layout_height="800dp"
+                android:orientation="vertical"
+                >
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/listview"
+                    />
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>
