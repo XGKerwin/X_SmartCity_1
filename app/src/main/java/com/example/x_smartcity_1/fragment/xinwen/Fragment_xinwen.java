@@ -1,4 +1,4 @@
-package com.example.x_smartcity_1.fragment;
+package com.example.x_smartcity_1.fragment.xinwen;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import com.example.x_smartcity_1.R;
 import com.example.x_smartcity_1.adapter.XINWEN_adapter;
 import com.example.x_smartcity_1.bean.GetImages;
 import com.example.x_smartcity_1.bean.GetNEWsList;
+import com.example.x_smartcity_1.fragment.Fragmen_dangjian;
 import com.example.x_smartcity_1.net.OKHttpTo;
 import com.example.x_smartcity_1.net.OkHttpLo;
 import com.example.x_smartcity_1.net.OkHttpLoImage;
@@ -48,6 +49,9 @@ public class Fragment_xinwen extends Fragment {
     private TextView txtYule;
     private FragmentTransaction fragmentTransaction;
 
+    public static Fragment_xinwen nweInstance(){
+        return  new Fragment_xinwen();
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -141,23 +145,34 @@ public class Fragment_xinwen extends Fragment {
 
     private void getImag() {
         for (int i = 0; i < getImages.size(); i++) {
-            final int finalI = i;
+            final int finalI = i+1;
             new OkHttpToImage()
                     .setUrl(getImages.get(i).getPath())
                     .setOkHttpLoImage(new OkHttpLoImage() {
                         @Override
                         public void onResponse(Call call, Bitmap bitmap) {
-                            ImageView imageView = new ImageView(getContext());
-                            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                            imageView.setImageBitmap(bitmap);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                            imageViews.add(imageView);
-                            if (imageViews.size() == 5) {
-                                for (int i = 0; i < imageViews.size(); i++) {
-                                    viewFlipper.addView(imageViews.get(i));
+                            try {
+                                ImageView imageView = new ImageView(getContext());
+                                imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                                imageView.setImageBitmap(bitmap);
+                                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                imageViews.add(imageView);
+                                imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        getFragment(new Fragment_xinwen1(finalI));
+                                    }
+                                });
+                                if (imageViews.size() == 5) {
+                                    for (int i = 0; i < imageViews.size(); i++) {
+                                        viewFlipper.addView(imageViews.get(i));
+                                    }
+                                    viewFlipper.startFlipping();
                                 }
-                                viewFlipper.startFlipping();
+                            }catch (NullPointerException e){
+
                             }
+
                         }
 
                         @Override

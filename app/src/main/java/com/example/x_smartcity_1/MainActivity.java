@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Fragment1(new Fragment1());
-
+        //你的导航栏
     }
 
 

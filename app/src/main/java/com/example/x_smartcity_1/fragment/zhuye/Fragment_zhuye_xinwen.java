@@ -1,4 +1,4 @@
-package com.example.x_smartcity_1.fragment;
+package com.example.x_smartcity_1.fragment.zhuye;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;

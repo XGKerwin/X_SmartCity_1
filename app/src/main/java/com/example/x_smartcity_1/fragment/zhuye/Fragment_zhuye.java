@@ -1,17 +1,18 @@
-package com.example.x_smartcity_1.fragment;
+package com.example.x_smartcity_1.fragment.zhuye;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -21,12 +22,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.x_smartcity_1.R;
 import com.example.x_smartcity_1.adapter.ZHUYE_fuwu_adapter;
+import com.example.x_smartcity_1.adapter.ZHUYE_sousuo_adapter;
 import com.example.x_smartcity_1.adapter.ZHUYE_xinwen_adapter;
 import com.example.x_smartcity_1.adapter.ZHUYE_zhuti_adapter;
 import com.example.x_smartcity_1.bean.GetImages;
 import com.example.x_smartcity_1.bean.GetNEWSContent;
+import com.example.x_smartcity_1.bean.GetNewsByKeys;
 import com.example.x_smartcity_1.bean.GetNewsInfoBySubject;
 import com.example.x_smartcity_1.bean.Service_info;
+import com.example.x_smartcity_1.fragment.xinwen.Fragment_xinwen1;
 import com.example.x_smartcity_1.net.OKHttpTo;
 import com.example.x_smartcity_1.net.OkHttpLo;
 import com.example.x_smartcity_1.net.OkHttpLoImage;
@@ -51,7 +55,6 @@ public class Fragment_zhuye extends Fragment {
     private ViewFlipper viewFlipper;
     private GridView gridFuwu;
     private GridView girdZhuti;
-    private LinearLayout newsLayout;
     private List<Service_info> service_infos;
     private ZHUYE_fuwu_adapter fuwu_adapter;
     private ZHUYE_zhuti_adapter zhuti_adapter;
@@ -60,6 +63,15 @@ public class Fragment_zhuye extends Fragment {
     private List<GetNEWSContent> getNEWSContents;
     private List<GetNewsInfoBySubject> getNewsInfoBySubjects;
     private List<ImageView> imageViews;
+    private EditText edSeek;
+    private LinearLayout btnSousuo;
+    private List<GetNewsByKeys> getNewsByKeys;
+
+
+
+//    public static Fragment_zhuye nweInstance(){
+//        return  new Fragment_zhuye();
+//    }
 
     @Nullable
     @Override
@@ -73,14 +85,58 @@ public class Fragment_zhuye extends Fragment {
         gettheme();         //热门主题
         getnews();          //新闻
         btn_zhuti();        //主题点击事件
+
+        btn();
         return view;
     }
+
+    private void btn() {
+        btnSousuo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = edSeek.getText().toString();
+                if (s.equals("")){
+                    Toast.makeText(getContext(),"请输入内容",Toast.LENGTH_SHORT).show();
+                }else {
+                    getOkHttp1(s);
+                }
+            }
+        });
+    }
+
+    private void getOkHttp1(String s) {
+        if (getNewsByKeys == null){
+            getNewsByKeys = new ArrayList<>();
+        }else {
+            getNewsByKeys.clear();
+        }
+        //{"keys":"新闻"}
+        new OKHttpTo()
+                .setUrl("getNewsByKeys")
+                .setJSONObject("keys",s)
+                .setOkHttpLo(new OkHttpLo() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        getNewsByKeys.addAll((Collection<? extends GetNewsByKeys>) new Gson().fromJson(jsonObject.optJSONArray("ROWS_DETAIL").toString(),
+                                new TypeToken<List<GetNewsByKeys>>(){}.getType()));
+                        getFragment(new Fragment_sousuo(getNewsByKeys));
+
+                    }
+
+                    @Override
+                    public void onFailure(IOException obj) {
+
+                    }
+                }).start();
+    }
+
+
 
     private void btn_zhuti() {
         girdZhuti.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         getNewsInfoBySubject("电影");
                         break;
@@ -100,20 +156,21 @@ public class Fragment_zhuye extends Fragment {
     }
 
     private void getNewsInfoBySubject(final String s) {
-        if (getNewsInfoBySubjects == null){
+        if (getNewsInfoBySubjects == null) {
             getNewsInfoBySubjects = new ArrayList<>();
-        }else {
+        } else {
             getNewsInfoBySubjects.clear();
         }
         new OKHttpTo()
                 .setUrl("getNewsInfoBySubject")
-                .setJSONObject("subject",s)
+                .setJSONObject("subject", s)
                 .setOkHttpLo(new OkHttpLo() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         getNewsInfoBySubjects.addAll((Collection<? extends GetNewsInfoBySubject>) new Gson().fromJson(jsonObject.optJSONArray("ROWS_DETAIL").toString(),
-                                new TypeToken<List<GetNewsInfoBySubject>>(){}.getType()));
-                        getFragment(new Fragment_zhuye_zhuti(getNewsInfoBySubjects,s));
+                                new TypeToken<List<GetNewsInfoBySubject>>() {
+                                }.getType()));
+                        getFragment(new Fragment_zhuye_zhuti(getNewsInfoBySubjects, s));
                     }
 
                     @Override
@@ -124,12 +181,12 @@ public class Fragment_zhuye extends Fragment {
     }
 
     private void getnews() {
-        if (getNEWSContents == null){
+        if (getNEWSContents == null) {
             getNEWSContents = new ArrayList<>();
-        }else {
+        } else {
             getNEWSContents.clear();
         }
-        for (int i=1;i<=10;i++){
+        for (int i = 1; i <= 10; i++) {
             GetNEWSContent(i);
         }
     }
@@ -137,7 +194,7 @@ public class Fragment_zhuye extends Fragment {
     private void GetNEWSContent(int i) {
         new OKHttpTo()
                 .setUrl("getNEWSContent")
-                .setJSONObject("newsid",i)
+                .setJSONObject("newsid", i)
                 .setOkHttpLo(new OkHttpLo() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -146,8 +203,8 @@ public class Fragment_zhuye extends Fragment {
                                         .optJSONObject(0).toString(),
                                 GetNEWSContent.class);
                         getNEWSContents.add(getNEWSContent);
-                        if (getNEWSContents.size() == 10){
-                            xinwen_adapter = new ZHUYE_xinwen_adapter(getActivity(),getNEWSContents);
+                        if (getNEWSContents.size() == 10) {
+                            xinwen_adapter = new ZHUYE_xinwen_adapter(getActivity(), getNEWSContents);
                             listview.setAdapter(xinwen_adapter);
                         }
                     }
@@ -252,29 +309,39 @@ public class Fragment_zhuye extends Fragment {
 
     private void getImag() {
         for (int i = 0; i < getImages.size(); i++) {
-            final int finalI = i;
+            final int finalI = i + 1;
+            //你现在是点一次重新加载这个fragment吗？en 不能这么写 你问过孙果鹏咋写的吗？问了 他说没法
+            // 你找到你的主activity
+
+
             new OkHttpToImage()
                     .setUrl(getImages.get(i).getPath())
                     .setOkHttpLoImage(new OkHttpLoImage() {
                         @Override
                         public void onResponse(Call call, Bitmap bitmap) {
-                            ImageView imageView = new ImageView(getContext());
-                            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                            imageView.setImageBitmap(bitmap);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                            imageViews.add(imageView);
-                            imageView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    getFragment(new Fragment_xinwen1(getImages.get(finalI).getPath()));
+                            try {
+                                ImageView imageView = new ImageView(getContext());
+                                imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                                imageView.setImageBitmap(bitmap);
+                                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                imageViews.add(imageView);
+                                imageView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        getFragment(new Fragment_xinwen1(finalI));
+                                    }
+                                });
+                                if (imageViews.size() == 5) {
+                                    for (int i = 0; i < imageViews.size(); i++) {
+                                        viewFlipper.addView(imageViews.get(i));
+                                    }
+                                    viewFlipper.startFlipping();
                                 }
-                            });
-                            if (imageViews.size() == 5) {
-                                for (int i = 0; i < imageViews.size(); i++) {
-                                    viewFlipper.addView(imageViews.get(i));
-                                }
-                                viewFlipper.startFlipping();
+                            } catch (NullPointerException e) {
+
                             }
+
+
                         }
 
                         @Override
@@ -295,7 +362,8 @@ public class Fragment_zhuye extends Fragment {
         viewFlipper = view.findViewById(R.id.view_flipper);
         gridFuwu = view.findViewById(R.id.grid_fuwu);
         girdZhuti = view.findViewById(R.id.gird_zhuti);
-        newsLayout = view.findViewById(R.id.news_layout);
         listview = view.findViewById(R.id.listview);
+        edSeek = view.findViewById(R.id.ed_seek);
+        btnSousuo = view.findViewById(R.id.btn_sousuo);
     }
 }

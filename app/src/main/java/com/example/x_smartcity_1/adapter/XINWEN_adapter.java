@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.x_smartcity_1.R;
 import com.example.x_smartcity_1.bean.GetNEWsList;
+import com.example.x_smartcity_1.fragment.xinwen.Fragment_xinwen_msg;
 import com.example.x_smartcity_1.net.OkHttpLoImage;
 import com.example.x_smartcity_1.net.OkHttpToImage;
 

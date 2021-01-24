@@ -1,4 +1,4 @@
-package com.example.x_smartcity_1.adapter;
+package com.example.x_smartcity_1.fragment.xinwen;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;
@@ -20,9 +20,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.x_smartcity_1.App;
 import com.example.x_smartcity_1.R;
+import com.example.x_smartcity_1.adapter.XINWEN_adapterpinglun;
 import com.example.x_smartcity_1.bean.GetCommitById;
 import com.example.x_smartcity_1.bean.GetNEWsList;
-import com.example.x_smartcity_1.fragment.Fragment_xinwen;
+import com.example.x_smartcity_1.fragment.xinwen.Fragment_xinwen;
 import com.example.x_smartcity_1.net.OKHttpTo;
 import com.example.x_smartcity_1.net.OkHttpLo;
 import com.example.x_smartcity_1.net.OkHttpLoImage;

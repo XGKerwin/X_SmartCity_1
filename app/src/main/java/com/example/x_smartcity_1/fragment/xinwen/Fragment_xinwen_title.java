@@ -1,9 +1,8 @@
-package com.example.x_smartcity_1.fragment;
+package com.example.x_smartcity_1.fragment.xinwen;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +53,7 @@ public class Fragment_xinwen_title extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getContext(), R.layout.fragment_xinwen_title, null);
         initView(view);
+        title.setText(string);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

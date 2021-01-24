@@ -23,6 +23,7 @@ import com.example.x_smartcity_1.Activity.Activity_geren_user;
 import com.example.x_smartcity_1.App;
 import com.example.x_smartcity_1.R;
 import com.example.x_smartcity_1.bean.GetUserInfo;
+import com.example.x_smartcity_1.fragment.xinwen.Fragment_xinwen;
 import com.example.x_smartcity_1.net.OKHttpTo;
 import com.example.x_smartcity_1.net.OkHttpLo;
 import com.example.x_smartcity_1.net.OkHttpLoImage;
@@ -53,7 +54,9 @@ public class Fragment_wode extends Fragment {
     private String user1;
     private List<GetUserInfo> getUserInfos;
     private String img_user = "";
-
+    public static Fragment_wode nweInstance(){
+        return  new Fragment_wode();
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -128,7 +131,7 @@ public class Fragment_wode extends Fragment {
         user1 = App.getUserida();
 
         if (user1 == null){
-
+            imgTouxiang.setImageResource(R.drawable.user6);
         }else {
             getOkhttp(user1);
         }
@@ -215,6 +218,7 @@ public class Fragment_wode extends Fragment {
                     user1 = App.getUserida();
                     Toast.makeText(getContext(),"退出成功",Toast.LENGTH_SHORT).show();
                     getOkhttp(user1);
+                    imgTouxiang.setImageResource(R.drawable.user6);
                 }
             }
         });

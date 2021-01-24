@@ -1,4 +1,4 @@
-package com.example.x_smartcity_1.fragment;
+package com.example.x_smartcity_1.fragment.zhuye;
 
 import android.content.Intent;
 import android.net.Uri;

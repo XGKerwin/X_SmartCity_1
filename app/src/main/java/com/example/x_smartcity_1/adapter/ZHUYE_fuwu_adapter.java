@@ -1,8 +1,6 @@
 package com.example.x_smartcity_1.adapter;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -18,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.x_smartcity_1.R;
 import com.example.x_smartcity_1.bean.Service_info;
+import com.example.x_smartcity_1.fragment.ditie.Fragment_zhuye_ditie;
 import com.example.x_smartcity_1.fragment.fuwu.Fragment_fuwu;
 import com.example.x_smartcity_1.net.OkHttpLoImage;
 import com.example.x_smartcity_1.net.OkHttpToImage;

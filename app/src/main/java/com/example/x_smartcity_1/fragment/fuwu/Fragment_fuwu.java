@@ -1,7 +1,6 @@
 package com.example.x_smartcity_1.fragment.fuwu;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.x_smartcity_1.R;
 import com.example.x_smartcity_1.adapter.FUWU_adapter;
 import com.example.x_smartcity_1.bean.GetServiceByType;
+import com.example.x_smartcity_1.fragment.zhuye.Fragment_zhuye;
 import com.example.x_smartcity_1.net.OKHttpTo;
 import com.example.x_smartcity_1.net.OkHttpLo;
 import com.google.gson.Gson;
@@ -32,7 +32,7 @@ import java.util.List;
 public class Fragment_fuwu extends Fragment {
 
 
-    private EditText edSeek;
+    private EditText ed_sousuo;
     private LinearLayout btnSousuo;
     private TextView fuwu;
     private TextView yanglao;
@@ -42,7 +42,9 @@ public class Fragment_fuwu extends Fragment {
     private GridView gridview;
     private List<GetServiceByType> getServiceByType;
     private FUWU_adapter adapter;
-
+    public static Fragment_fuwu nweInstance(){
+        return  new Fragment_fuwu();
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -130,7 +132,7 @@ public class Fragment_fuwu extends Fragment {
 
 
     private void initView(View view) {
-        edSeek = view.findViewById(R.id.ed_seek);
+        ed_sousuo = view.findViewById(R.id.ed_seek);
         btnSousuo = view.findViewById(R.id.btn_sousuo);
         fuwu = view.findViewById(R.id.fuwu);
         yanglao = view.findViewById(R.id.yanglao);
